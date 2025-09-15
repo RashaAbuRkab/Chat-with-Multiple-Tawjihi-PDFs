@@ -2,9 +2,9 @@ import streamlit as st
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceInstructEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
+
 
 
 def get_pdf_text(pdf_docs):
@@ -27,7 +27,7 @@ def get_text_chunks(text):
     return chunks
 
 def get_vectorstore(text_chunks):
-    embedding = OpenAIEmbeddings()
+    embedding = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-small") 
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embedding)
     return vectorstore
 
